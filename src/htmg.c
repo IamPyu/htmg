@@ -7,6 +7,7 @@ static SDL_Renderer *renderer;
 static SDL_Event event;
 // static htmg_Color drawColor;
 
+// Privte utility functions
 void PrintSDLError() {
   printf("An SDL2 error occured: %s\n", SDL_GetError());
 }
@@ -20,6 +21,7 @@ SDL_Rect *CreateRect(int x, int y, int width, int height) {
   return rect;
 }
 
+// Window functions
 int InitWindow(int width, int height, const char *title) {
   SDL_Init(SDL_INIT_EVERYTHING);
   if (SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &window, &renderer)) {
@@ -52,6 +54,8 @@ int WindowShouldClose() {
 
   return 0;
 }
+
+// Drawing functions
 
 void BeginDrawing(htmg_Color bgColor) {
   SetDrawColorStruct(bgColor);
