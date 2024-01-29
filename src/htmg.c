@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdlib.h>
 #include "htmg.h"
 
@@ -7,24 +8,34 @@ static SDL_Renderer *renderer;
 static SDL_Event event;
 // static htmg_Color drawColor;
 
-// Privte utility functions
+// Private utility functions
+
 void PrintSDLError() {
   printf("An SDL2 error occured: %s\n", SDL_GetError());
 }
 
-SDL_Rect *CreateRect(int x, int y, int width, int height) {
-  SDL_Rect *rect = malloc(sizeof(SDL_Rect));
-  rect->x = x;
-  rect->y = y;
-  rect->w = width;
-  rect->h = height;
+SDL_Rect CreateRect(int x, int y, int width, int height) {
+  SDL_Rect rect = {0};
+  rect.x = x;
+  rect.y = y;
+  rect.w = width;
+  rect.h = height;
   return rect;
 }
 
 // Window functions
+
 int InitWindow(int width, int height, const char *title) {
-  SDL_Init(SDL_INIT_EVERYTHING);
-  if (SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &window, &renderer)) {
+  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+    PrintSDLError();
+    SDL_Quit();
+    return 1;
+  }
+
+  IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_WEBP | IMG_INIT_TIF);
+  
+
+  if (SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &window, &renderer) != 0) {
     PrintSDLError();
     SDL_Quit();
     return 1;
@@ -74,13 +85,20 @@ void SetDrawColorStruct(htmg_Color color) {
 }
 
 void DrawRect(int x, int y, int width, int height) {
-  SDL_Rect *rect = CreateRect(x, y, width, height);
-  SDL_RenderDrawRect(renderer, rect);
-  free(rect);
+  SDL_Rect rect = CreateRect(x, y, width, height);
+  SDL_RenderDrawRect(renderer, &rect);
 }
 
 void FillRect(int x, int y, int width, int height) {
-  SDL_Rect *rect = CreateRect(x, y, width, height);
-  SDL_RenderFillRect(renderer, rect);
-  free(rect);
+  SDL_Rect rect = CreateRect(x, y, width, height);
+  SDL_RenderFillRect(renderer, &rect);
+}
+
+void DrawTexture(int x, int y, int width, int height, const char *filePath) {
+  SDL_Texture *tex = IMG_LoadTexture(renderer, filePath);
+  SDL_Rect rect = CreateRect(x, y, width, height);
+
+  SDL_RenderCopy(renderer, tex, NULL, &rect);
+
+  SDL_DestroyTexture(tex); // I dont care if I am allocating images every single damn frame because it works!
 }

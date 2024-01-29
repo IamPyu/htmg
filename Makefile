@@ -1,6 +1,6 @@
 CC:=gcc
 CFLAGS+=-Wall -fPIC -shared
-CFLAGS+=-lSDL2
+CFLAGS+=-lSDL2 -lSDL2_image
 
 SRC:=$(shell find src -name "*.c")
 

@@ -13,6 +13,8 @@ int main(void) {
     SetDrawColor(255, 0, 0, 255);
     FillRect(0, 0, 200, 200);
 
+    DrawTexture(50, 50, 200, 120, "./tests/water.png");
+
     EndDrawing();
   }
   
