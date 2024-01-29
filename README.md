@@ -1,4 +1,4 @@
-#+TITLE:  How To Make Game
+# How To Make Game
 
 Game library for C and C++
 
