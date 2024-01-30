@@ -1,5 +1,18 @@
 # How To Make Game
 
-Game library for C and C++
+Graphic library for C and C++
 
 Inspired by Raylib
+
+## Depedencies
+
+
+
+## Features
+
+- [X] Window creation
+- [X] Colors
+- [X] Basic drawing of rectangles and images
+- [ ] Drawing of circles
+- [ ] Sounds
+- [ ]

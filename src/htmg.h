@@ -28,7 +28,10 @@ void DrawRect(int x, int y, int width, int height);
 void FillRect(int x, int y, int width, int height);
 
 // Draw a texture onto the screen
-void DrawTexture(int x, int y, int width, int height, const char *filePath);
+int DrawTexture(int x, int y, int width, int height, const char *filePath);
 
 void BeginDrawing(htmg_Color bgColor);
 void EndDrawing();
+
+// Play a sound file
+int PlaySound(const char *filePath);

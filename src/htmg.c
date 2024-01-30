@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include <stdlib.h>
 #include "htmg.h"
 
@@ -33,7 +34,7 @@ int InitWindow(int width, int height, const char *title) {
   }
 
   IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_WEBP | IMG_INIT_TIF);
-  
+  Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3 | MIX_INIT_WAVPACK);
 
   if (SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &window, &renderer) != 0) {
     PrintSDLError();
@@ -94,11 +95,34 @@ void FillRect(int x, int y, int width, int height) {
   SDL_RenderFillRect(renderer, &rect);
 }
 
-void DrawTexture(int x, int y, int width, int height, const char *filePath) {
+int DrawTexture(int x, int y, int width, int height, const char *filePath) {
   SDL_Texture *tex = IMG_LoadTexture(renderer, filePath);
   SDL_Rect rect = CreateRect(x, y, width, height);
+
+  if (tex == NULL) {
+    PrintSDLError();
+    return 1;
+  }
 
   SDL_RenderCopy(renderer, tex, NULL, &rect);
 
   SDL_DestroyTexture(tex); // I dont care if I am allocating images every single damn frame because it works!
+  return 0;
+}
+
+int PlaySound(const char *filePath) {
+  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096) != 0) {
+    PrintSDLError();
+    return 1;
+  }
+
+  Mix_Chunk *sound = Mix_LoadWAV(filePath);
+  if (sound == NULL) {
+    PrintSDLError();
+    return 1;
+  }
+
+  Mix_PlayChannel(-1, sound, 0);
+
+  return 0;
 }
