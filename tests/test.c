@@ -2,7 +2,7 @@
 #include "src/htmg.h"
 
 int main(void) {
-  InitWindow(880, 660, "How to make games?!?!!?!?");
+  InitWindow(880 * 2, 660 * 2, "How to make games?!?!!?!?");
 
   while (!WindowShouldClose()) {
     BeginDrawing((htmg_Color){255, 255, 0, 255});
