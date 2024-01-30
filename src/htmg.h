@@ -1,5 +1,6 @@
 #pragma once
 #include <stdlib.h>
+#include <SDL2/SDL_keycode.h>
 
 typedef struct {
     uint8_t r;
@@ -35,3 +36,8 @@ void EndDrawing();
 
 // Play a sound file
 int PlaySound(const char *filePath);
+
+// Return true if a certain key is being pressed.
+int IsKeyPressed(SDL_KeyCode key);
+// Return true if a certain key is not being pressed.
+int IsKeyReleased(SDL_KeyCode key);

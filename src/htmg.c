@@ -67,6 +67,40 @@ int WindowShouldClose() {
   return 0;
 }
 
+// Event-related functions
+
+int IsKeyPressed(SDL_KeyCode key) {
+  if (SDL_PollEvent(&event)) {
+    switch (event.type) {
+      case SDL_KEYDOWN: {
+        if (event.key.keysym.sym == key) {
+          return 1;
+        }
+        break;
+      }
+      default: break;
+    }
+  }
+
+  return 0;
+}
+
+int IsKeyReleased(SDL_KeyCode key) {
+  if (SDL_PollEvent(&event)) {
+    switch (event.type) {
+      case SDL_KEYUP: {
+        if (event.key.keysym.sym == key) {
+          return 1;
+        }
+        break;
+      }
+      default: break;
+    }
+  }
+
+  return 0;
+}
+
 // Drawing functions
 
 void BeginDrawing(htmg_Color bgColor) {

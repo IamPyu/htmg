@@ -15,7 +15,9 @@ int main(void) {
 
     DrawTexture(50, 50, 200, 120, "./tests/water.png");
 
-    PlaySound("tests/oof.ogg");
+    if (IsKeyPressed(SDLK_SPACE)) {
+      PlaySound("tests/oof.ogg");
+    }
 
     EndDrawing();
   }

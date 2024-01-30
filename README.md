@@ -15,4 +15,5 @@ Inspired by Raylib
 - [X] Basic drawing of rectangles and images
 - [ ] Drawing of circles
 - [X] Sounds
-- [ ] Inputs and Events
+- [X] Inputs
+- [ ] Events
