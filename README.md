@@ -6,7 +6,7 @@ Inspired by Raylib
 
 ## Depedencies
 
-
+- SDL2
 
 ## Features
 
