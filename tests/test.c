@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "src/htmg.h"
+#include "../src/htmg.h"
 
 int main(void) {
   InitWindow(1000, 800, "How to make games?!?!!?!?");
@@ -13,11 +13,7 @@ int main(void) {
     SetDrawColor(255, 0, 0, 255);
     FillRect(0, 0, 200, 200);
 
-    DrawTexture(50, 50, 200, 120, "./tests/water.png");
-
-    if (IsKeyPressed(SDLK_SPACE)) {
-      PlaySound("tests/oof.ogg");
-    }
+    //DrawTexture(50, 50, 200, 120, "./tests/water.png");
 
     EndDrawing();
   }

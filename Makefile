@@ -14,4 +14,4 @@ build:
 
 test: build
 	@$(CC) -Lbin -lhtmg tests/test.c -o tests/test
-	@./tests/test
+	@LD_LIBRARY_PATH=bin ./tests/test

@@ -34,7 +34,7 @@ int InitWindow(int width, int height, const char *title) {
   }
 
   IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_WEBP | IMG_INIT_TIF);
-  Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3 | MIX_INIT_WAVPACK);
+  Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3);
 
   if (SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &window, &renderer) != 0) {
     PrintSDLError();
@@ -47,8 +47,8 @@ int InitWindow(int width, int height, const char *title) {
 }
 
 void CloseWindow() {
-  SDL_DestroyWindow(window);
-  SDL_DestroyRenderer(renderer);
+  IMG_Quit();
+  Mix_Quit();
   SDL_Quit();
 }
 
@@ -133,14 +133,15 @@ int DrawTexture(int x, int y, int width, int height, const char *filePath) {
   SDL_Texture *tex = IMG_LoadTexture(renderer, filePath);
   SDL_Rect rect = CreateRect(x, y, width, height);
 
-  if (tex == NULL) {
+  if (tex != NULL) {
+    SDL_RenderCopy(renderer, tex, NULL, &rect);
+    SDL_DestroyTexture(tex);
+    
+  } else {
     PrintSDLError();
     return 1;
   }
 
-  SDL_RenderCopy(renderer, tex, NULL, &rect);
-
-  SDL_DestroyTexture(tex); // I dont care if I am allocating images every single damn frame because it works!
   return 0;
 }
 
@@ -151,12 +152,12 @@ int PlaySound(const char *filePath) {
   }
 
   Mix_Chunk *sound = Mix_LoadWAV(filePath);
+
   if (sound == NULL) {
     PrintSDLError();
     return 1;
   }
 
   Mix_PlayChannel(-1, sound, 0);
-
   return 0;
 }
